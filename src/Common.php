@@ -192,6 +192,60 @@ class Src_Common
         ];
     }
 
+    /**
+     * Json数据格式化
+     * @param array  $data   数据
+     * @param int $indentSpaceNum 缩进字符，默认4个空格
+     * @return string|fixed
+     */
+    public static function jsonFormat(array $data, $indentSpaceNum = 4)
+    {
+        // 对数组中每个元素递归进行urlencode操作，保护中文字符
+        array_walk_recursive($data, function(&$val)
+        {
+            if ($val !== true && $val !== false && $val !== null) {
+                $val = urlencode($val);
+            }
+        });
+        // json encode
+        $data = json_encode($data,JSON_UNESCAPED_UNICODE);
+        // 将urlencode的内容进行urldecode
+        $data = urldecode($data);
+        // 缩进处理
+        $ret = '';
+        $pos = 0;
+        $length = strlen($data);
+        $indent = str_repeat(' ', $indentSpaceNum);
+        $newline = "\n";
+        $prevChar = '';
+        $outOfQuotes = true;
+        for ($i = 0; $i <= $length; $i++) {
+            $char = substr($data, $i, 1);
+            if ($char == '"' && $prevChar != '\\') {
+                $outOfQuotes = !$outOfQuotes;
+            } elseif (($char == '}' || $char == ']') && $outOfQuotes) {
+                $ret .= $newline;
+                $pos--;
+                for ($j = 0; $j < $pos; $j++) {
+                    $ret .= $indent;
+                }
+            }
+            $ret .= $char;
+            if (($char == ',' || $char == '{' || $char == '[') && $outOfQuotes) {
+                $ret .= $newline;
+                if ($char == '{' || $char == '[') {
+                    $pos++;
+                }
+                for ($j = 0; $j < $pos; $j++) {
+                    $ret .= $indent;
+                }
+            }
+            $prevChar = $char;
+        }
+        // $ret = self::unicodeDecode($ret);
+        return $ret;
+    }
+
 }
 
 

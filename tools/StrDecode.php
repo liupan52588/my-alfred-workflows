@@ -78,7 +78,7 @@ class Tools_StrDecode extends Tools_Base
                 'uid' => 'decode',
                 'title' => '没有可用结果',
                 'subTitle' => '请检查输入字符串是否需要解码',
-                'arg' => $query,
+                'arg' => empty($query) ? '没有可用结果' : $query,
                 'valid' => true,
             ];
         }

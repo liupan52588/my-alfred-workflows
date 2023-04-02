@@ -118,9 +118,9 @@ class Tools_StrToArr extends Tools_Base
         if (count($workFlowsRes) == 0) {
             $workFlowsRes[] = [
                 'uid' => 'strToFail',
-                'title' => '',
+                'title' => empty($query) ? '请检查字符串' : $query,
                 'subTitle' => '请检查字符串',
-                'arg' => '',
+                'arg' => empty($query) ? '请检查字符串' : $query,
                 'valid' => true,
             ];
         }

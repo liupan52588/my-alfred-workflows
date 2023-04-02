@@ -33,13 +33,21 @@ class Tools_JsonTo extends Tools_Base
                 'arg' => $httpQuery,
                 'valid' => true,
             ];
+            $jsonFormat = Src_Common::jsonFormat($queryArr);
+            $workFlowsRes[] = [
+                'uid' => 'jsonFormat',
+                'title' => $jsonFormat,
+                'subTitle' => 'json 格式化',
+                'arg' => $jsonFormat,
+                'valid' => true,
+            ];
         } else {
             $res = $query;
             $workFlowsRes[] = [
                 'uid' => "jsonToArr-fail",
-                'title' => $res,
+                'title' => empty($res) ? '非json格式' : $res,
                 'subTitle' => '非json格式',
-                'arg' => $res,
+                'arg' => empty($res) ? '非json格式' : $res,
                 'valid' => false,
             ];
         }

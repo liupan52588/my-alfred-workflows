@@ -81,9 +81,9 @@ class Tools_StrCase extends Tools_Base
         } else {
             $workFlowsRes[] = [
                 'uid' => 'errorQuery',
-                'title' => $query,
+                'title' => empty($query) ? '只能填写数字、字母、下划线' : $query,
                 'subTitle' => '只能填写数字、字母、下划线',
-                'arg' => $query,
+                'arg' => empty($query) ? '只能填写数字、字母、下划线' : $query,
                 'valid' => false,
             ];
         }

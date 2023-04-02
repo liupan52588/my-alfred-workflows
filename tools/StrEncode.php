@@ -81,7 +81,7 @@ class Tools_StrEncode extends Tools_Base
                 'uid' => 'encode',
                 'title' => '没有可用的结果',
                 'subTitle' => '参数有问题，请重试',
-                'arg' => $query,
+                'arg' => empty($query) ? '没有可用结果' : $query,
                 'valid' => false,
             ];
         }

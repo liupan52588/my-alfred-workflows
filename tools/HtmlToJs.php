@@ -7,9 +7,9 @@ class Tools_HtmlToJs extends Tools_Base
     {
         $workFlowsRes = [];
         $queryArr = explode("\n", $query);
-        $str = 'let str=\'\'';
+        $str = 'let str=\'\';';
         foreach ($queryArr as $key => $value) {
-            $str .= "\n" . 'str += \'' . $value . '\'';
+            $str .= "\n" . 'str += \'' . str_replace('\'', '"', $value) . '\';';
         }
         $workFlowsRes[] = [
             'uid' => "htmlToJs",

@@ -54,9 +54,9 @@ class Tools_DateTime extends Tools_Base
         if ($formatErr) {
             $workFlowsRes[] = [
                 'uid' => 'timeInputFormatError',
-                'title' => $timeInput,
+                'title' => empty($timeInput) ? '格式有问题，请检查' : $timeInput,
                 'subTitle' => '格式有问题，请检查',
-                'arg' => $timeInput,
+                'arg' => empty($timeInput) ? '格式有问题，请检查' : $timeInput,
                 'valid' => true,
             ];
         } else {

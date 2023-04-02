@@ -1,18 +1,27 @@
 <?php
 
 use Alfred\Workflows\Workflow;
-
+ini_set('date.timezone', 'Asia/Shanghai');
 require_once('./autoload.php');
 $workflow = new Workflow();
 
-$toolClassName = $query = '';
+$toolClassName = $queryWhole = $query = $clipboard = '';
 if (!empty($argv[1]) && mb_substr($argv[1], 0, 4) === '--c=') {
     $toolClassName = trim(mb_substr($argv[1], 4));
 }
 if (!empty($argv[2]) && mb_substr($argv[2], 0, 4) === '--d=') {
-    $query = trim(mb_substr($argv[2], 4));
+    $queryWhole = mb_substr($argv[2], 4);
+    $query = trim($queryWhole);
 }
+$useClipboard = false;
+if(!empty($argv[3]) && $argv[3] === '--useClipboard=1'){
+    $useClipboard = true;
+}
+$clipboard = getenv('__CLIPBOARD__');
 
+if($queryWhole === '' && $useClipboard){
+    $query = $clipboard;
+}
 try {
     $toolClass = 'Tools_' . $toolClassName;
     $resList = $toolClass::getWorkFlowsRes($query);
@@ -34,6 +43,9 @@ foreach ($resList as $item) {
     }
     if (!isset($item['copy'])) {
         $item['copy'] = $item['title'];
+    }
+    if (!isset($item['type'])) {
+        $item['type'] = 'default';
     }
     foreach ($item as $key => $value) {
         if(empty($value)) {
