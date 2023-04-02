@@ -12,3 +12,4 @@
 * sencode 字符串encode编码:urlencode、HTML实体转义、base64编码、unicode编码等
 * sdecode 同sencode相反
 * bdfy 百度翻译，需手动配置常量BDFY_APP_ID和BDFY_SECRET，自行去百度翻译申请
+* qrc 生成二维码，默认120秒后自动删除二维码文件
